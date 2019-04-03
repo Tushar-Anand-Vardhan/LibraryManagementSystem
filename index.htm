@@ -7,7 +7,140 @@
 
 <h1>My First Heading</h1>
 <h1>My Second Heading</h1>
-<p>My first paragraph.</p>
+<p>#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node* left;
+    struct node* right;
+};
+struct node *root=NULL;
+struct node* getnewn(int data)
+{
+    struct node* newn=(struct node*)malloc(sizeof(struct node));
+    newn->data=data;
+    newn->left=newn->right=NULL;
+    return newn;
+}
+struct node* insert(struct node* root,int data)
+{
+    if(root==NULL)
+    {
+        root=getnewn(data);
+    }
+    else if(root->data>data)
+    {
+        root->left=insert(root->left,data);
+    }
+    else if(root->data<data)
+    {
+        root->right=insert(root->right,data);
+    }
+    return root;
+}
+int search(struct node* root,int data)
+{
+    if(root==NULL) return 2;
+    if(root->data==data)return 1;
+    else if(data<root->data)
+        search(root->left,data);
+    else if(data>root->data)
+        search(root->right,data);
+}
+struct node* findmin(struct node* root)
+{
+    while(root->left!=NULL)
+        root=root->left;
+    return root;
+}
+struct node* del(struct node* root,int data)
+{
+    if(root==NULL)
+        return root;
+    else if(root->data>data)
+    {
+        root->left=del(root->left,data);
+    }
+    else if(root->data<data)
+    {
+        root->right=del(root->right,data);
+    }
+    else //node found. Time to delete.
+        //CASE1 no sub tree.
+        if(root->left==NULL && root->right==NULL)
+    {
+        free(root);
+        root=NULL;
+        return root;
+    }
+        //CASE2 one sub tree.
+        else if(root->left==NULL)
+        {
+            struct node * temp=root;
+            root=root->right;
+            free(temp);
+            return root;
+        }
+        else if(root->right==NULL)
+        {
+            struct node * temp=root;
+            root=root->left;
+            free(temp);
+            return root;
+        }//case3 two sub trees
+        else
+        {
+            struct node* temp=findmin(root->right);
+            root->data=temp->data;
+            root->right=del(root->right,temp->data);
+            return root;
+        }
+}
+
+void inorder(struct node *root)
+{
+    if(root==NULL)return;
+    inorder(root->left);
+    printf("%d - ",root->data);
+    inorder(root->right);
+}
+void preorder(struct node *root)
+{
+    if(root==NULL)return;
+    printf("%d - ",root->data);
+    preorder(root->left);
+    preorder(root->right);
+}
+void postorder(struct node *root)
+{
+    if(root==NULL)return;
+    postorder(root->left);
+    postorder(root->right);
+    printf("%d - ",root->data);
+}
+
+int main()
+{
+    root=insert(root,15);
+    insert(root,10);
+    insert(root,20);
+    insert(root,8);
+    insert(root,12);
+    insert(root,17);
+    insert(root,25);
+    inorder(root);
+    if(search(root,2)==1)
+        printf("Found");
+    else
+        printf("Not Found");
+    del(root,20);
+    inorder(root);
+    preorder(root);
+    postorder(root);
+    return 0;
+}
+</p>
 <p1>My Second Paragraph</p1>
 <a href="https://www.w3schools.com">This is a link</a>
 <img src="pic1.jpg" alt="Hello" width="144" height="142">
