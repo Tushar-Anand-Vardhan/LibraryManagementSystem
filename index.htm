@@ -7,118 +7,118 @@
 
 <h1>My First Heading</h1>
 <h1>My Second Heading</h1>
-<p>#include<stdio.h>
-#include<stdlib.h>
-struct node
-{
-    int data;
-    struct node* left;
-    struct node* right;
-};
-struct node *root=NULL;
-struct node* getnewn(int data)
-{
-    struct node* newn=(struct node*)malloc(sizeof(struct node));
-    newn->data=data;
-    newn->left=newn->right=NULL;
-    return newn;
-}
-struct node* insert(struct node* root,int data)
-{
-    if(root==NULL)
-    {
-        root=getnewn(data);
-    }
-    else if(root->data>data)
-    {
-        root->left=insert(root->left,data);
-    }
-    else if(root->data<data)
-    {
-        root->right=insert(root->right,data);
-    }
-    return root;
-}
-int search(struct node* root,int data)
-{
-    if(root==NULL) return 2;
-    if(root->data==data)return 1;
-    else if(data<root->data)
-        search(root->left,data);
-    else if(data>root->data)
-        search(root->right,data);
-}
-struct node* findmin(struct node* root)
-{
-    while(root->left!=NULL)
-        root=root->left;
-    return root;
-}
-struct node* del(struct node* root,int data)
-{
-    if(root==NULL)
-        return root;
-    else if(root->data>data)
-    {
-        root->left=del(root->left,data);
-    }
-    else if(root->data<data)
-    {
-        root->right=del(root->right,data);
-    }
-    else //node found. Time to delete.
-        //CASE1 no sub tree.
-        if(root->left==NULL && root->right==NULL)
-    {
-        free(root);
-        root=NULL;
-        return root;
-    }
-        //CASE2 one sub tree.
-        else if(root->left==NULL)
-        {
-            struct node * temp=root;
-            root=root->right;
-            free(temp);
-            return root;
-        }
-        else if(root->right==NULL)
-        {
-            struct node * temp=root;
-            root=root->left;
-            free(temp);
-            return root;
-        }//case3 two sub trees
-        else
-        {
-            struct node* temp=findmin(root->right);
-            root->data=temp->data;
-            root->right=del(root->right,temp->data);
-            return root;
-        }
-}
+<p>#include<stdio.h><br/>
+#include<stdlib.h><br/>
+struct node<br/>
+{<br/>
+    int data;<br/>
+    struct node* left;<br/>
+    struct node* right;<br/>
+};<br/>
+struct node *root=NULL;<br/>
+struct node* getnewn(int data)<br/>
+{<br/>
+    struct node* newn=(struct node*)malloc(sizeof(struct node));<br/>
+    newn->data=data;<br/>
+    newn->left=newn->right=NULL;<br/>
+    return newn;<br/>
+}<br/>
+struct node* insert(struct node* root,int data)<br/>
+{<br/>
+    if(root==NULL)<br/>
+    {<br/>
+        root=getnewn(data);<br/>
+    }<br/>
+    else if(root->data>data)<br/>
+    {<br/>
+        root->left=insert(root->left,data);<br/>
+    }<br/>
+    else if(root->data<data)<br/>
+    {<br/>
+        root->right=insert(root->right,data);<br/>
+    }<br/>
+    return root;<br/>
+}<br/>
+int search(struct node* root,int data)<br/>
+{<br/>
+    if(root==NULL) return 2;<br/>
+    if(root->data==data)return 1;<br/>
+    else if(data<root->data)<br/>
+        search(root->left,data);<br/>
+    else if(data>root->data)<br/>
+        search(root->right,data);<br/>
+}<br/>
+struct node* findmin(struct node* root)<br/>
+{<br/>
+    while(root->left!=NULL)<br/>
+        root=root->left;<br/>
+    return root;<br/>
+}<br/>
+struct node* del(struct node* root,int data)<br/>
+{<br/>
+    if(root==NULL)<br/>
+        return root;<br/>
+    else if(root->data>data)<br/>
+    {<br/>
+        root->left=del(root->left,data);<br/>
+    }<br/>
+    else if(root->data<data)<br/>
+    {<br/>
+        root->right=del(root->right,data);<br/>
+    }<br/>
+    else //node found. Time to delete.<br/>
+        //CASE1 no sub tree.<br/>
+        if(root->left==NULL && root->right==NULL)<br/>
+    {<br/>
+        free(root);<br/>
+        root=NULL;<br/>
+        return root;<br/>
+    }<br/>
+        //CASE2 one sub tree.<br/>
+        else if(root->left==NULL)<br/>
+        {<br/>
+            struct node * temp=root;<br/>
+            root=root->right;<br/>
+            free(temp);<br/>
+            return root;<br/>
+        }<br/>
+        else if(root->right==NULL)<br/>
+        {<br/>
+            struct node * temp=root;<br/>
+            root=root->left;<br/>
+            free(temp);<br/>
+            return root;<br/>
+        }//case3 two sub trees<br/>
+        else<br/>
+        {<br/>
+            struct node* temp=findmin(root->right);<br/>
+            root->data=temp->data;<br/>
+            root->right=del(root->right,temp->data);<br/>
+            return root;<br/>
+        }<br/>
+}<br/>
 
-void inorder(struct node *root)
-{
-    if(root==NULL)return;
-    inorder(root->left);
-    printf("%d - ",root->data);
-    inorder(root->right);
-}
-void preorder(struct node *root)
-{
-    if(root==NULL)return;
-    printf("%d - ",root->data);
-    preorder(root->left);
-    preorder(root->right);
-}
-void postorder(struct node *root)
-{
-    if(root==NULL)return;
-    postorder(root->left);
-    postorder(root->right);
-    printf("%d - ",root->data);
-}
+void inorder(struct node *root)<br/>
+{<br/>
+    if(root==NULL)return;<br/>
+    inorder(root->left);<br/>
+    printf("%d - ",root->data);<br/>
+    inorder(root->right);<br/>
+}<br/>
+void preorder(struct node *root)<br/>
+{<br/>
+    if(root==NULL)return;<br/>
+    printf("%d - ",root->data);<br/>
+    preorder(root->left);<br/>
+    preorder(root->right);<br/>
+}<br/>
+void postorder(struct node *root)<br/>
+{<br/>
+    if(root==NULL)return;<br/>
+    postorder(root->left);<br/>
+    postorder(root->right);<br/>
+    printf("%d - ",root->data);<br/>
+}<br/>
 
 int main()
 {
